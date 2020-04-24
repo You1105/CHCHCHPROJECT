@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="date_year">
+    <item>체인지</item>
+    <item>가전</item>
+    <item>장난감</item>
+    <item>의류</item>
+    <item>문구</item>
+    <item>대여</item>
+    <item>기부</item>
+
+
+</string-array>
+</resources>

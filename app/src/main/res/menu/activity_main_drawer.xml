@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="체인지"
+            android:icon="@drawable/ic_change"
+            />
+
+        <item
+            android:id="@+id/nav_machine"
+            android:title="가전" />
+        <item
+            android:id="@+id/nav_clothes"
+            android:title="의류" />
+        <item
+            android:id="@+id/nav_toy"
+            android:title="장난감" />
+        <item
+            android:id="@+id/nav_stationery"
+            android:title="문구/팬시" />
+
+    </group>
+    <group android:checkableBehavior="single">
+
+
+        <item  android:id="@+id/nav_rental"
+            android:icon="@drawable/ic_rental"
+            android:title="대여"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_donation"
+            android:icon="@drawable/ic_donation"
+            android:title="기부" /> </group>
+
+
+
+</menu>
