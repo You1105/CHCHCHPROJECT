@@ -2,11 +2,14 @@ package com.example.database.tab;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +18,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.database.ImageUploadInfo;
+import com.example.database.MainActivity;
 import com.example.database.R;
-import com.example.database.ui.home.HomeFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -42,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class WritingFragment extends Fragment {
-    public final String Database_Path = "All_Image_Uploads_Database";
+    public final String Database_Path = "users";
 
     private RealHomeFragment realHomeFragment;
 
@@ -64,7 +65,7 @@ public class WritingFragment extends Fragment {
 
     // Creating URI.
     Uri FilePathUri;
-
+    String stUid;
     Spinner yearSpinner;
 
     // Creating StorageReference and DatabaseReference object.
@@ -82,9 +83,8 @@ public class WritingFragment extends Fragment {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_writing, container, false);
 
-
-
-
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
+        stUid = sharedPref.getString("key", "");
 
 
         // Assign FirebaseStorage instance to storageReference.
@@ -93,10 +93,11 @@ public class WritingFragment extends Fragment {
         ArrayAdapter yearAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.date_year, android.R.layout.simple_spinner_item);
         yearSpinner.setAdapter(yearAdapter);
-        // Assign FirebaseDatabase instance with root database name.
-        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
 
+
+            //databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(stChatId).child("uploadimage");}
         //Assign ID'S to button.
+           databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         ChooseButton = root.findViewById(R.id.ButtonChooseImage);
         UploadButton = root.findViewById(R.id.ButtonUploadImage);
 
@@ -147,6 +148,8 @@ public class WritingFragment extends Fragment {
 
             }
         });
+        ActionBar actionBar=((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("Writing");
         return root;
     }
 
@@ -204,76 +207,69 @@ public class WritingFragment extends Fragment {
             progressDialog.show();
 
             // Creating second StorageReference.
-            StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
-
-            // Adding addOnSuccessListener to second StorageReference.
-            storageReference2nd.putFile(FilePathUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-
-                            // Getting image name from EditText and store into string variable.
-                            String TempImageName = ImageName.getText().toString().trim();
-                            String TempText=Text.getText().toString().trim();
-                            String category =yearSpinner.getSelectedItem().toString();
-                            //String Url= taskSnapshot.getDownloadUrl().toString();
-String Url="d";
-                            // Hiding the progressDialog after done uploading.
-                            progressDialog.dismiss();
-                            realHomeFragment= new RealHomeFragment();
-                            RealHomeFragment fragHome = new RealHomeFragment();
-                            // Showing toast message after done uploading.
-                            Toast.makeText(getContext().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            getActivity().getSupportFragmentManager().beginTransaction().add((R.id.main_frame),realHomeFragment).addToBackStack(null).commit();
-
-                           // Intent in = new Intent(getActivity(), RealHomeFragment.class);
-                           // startActivity(in);
-
-                            // @SuppressWarnings("VisibleForTests")
-                            final ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName,Url,TempText,category);
+            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis()
+                    + "." + GetFileExtension(FilePathUri));
 
 
-                            // Getting image upload ID.
-                            String ImageUploadId = databaseReference.push().getKey();
+            UploadTask uploadTask = storageReference2nd.putFile(FilePathUri);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return storageReference2nd.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        String Url = String.valueOf(downloadUri);
+                        Log.d("url", Url);
+
+                        // Write a message to the database
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("users");
+
+                        String TempImageName = ImageName.getText().toString().trim();
+                        String TempText = Text.getText().toString().trim();
+                        String category = yearSpinner.getSelectedItem().toString();
+
+                        progressDialog.dismiss();
+                        realHomeFragment = new RealHomeFragment();
+
+                        // Showing toast message after done uploading.
+                        Toast.makeText(getContext().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                        getActivity().getSupportFragmentManager().beginTransaction().add((R.id.main_frame), realHomeFragment).
+                                addToBackStack(null).commit();
+
+                        // Intent in = new Intent(getActivity(), RealHomeFragment.class);
+                        // startActivity(in);
+
+                        // @SuppressWarnings("VisibleForTests")
+                        final ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, Url, TempText, category);
 
 
-                            // Adding image upload id s child element into databaseReference.
-                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
+                        // Getting image upload ID.
+                        String ImageUploadId = databaseReference.child(stUid).child("imageupload").push().getKey();
 
 
-                        }
-                    })
-                    // If something goes wrong .
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
+                        // Adding image upload id s child element into databaseReference.
+                        databaseReference.child(stUid).child("imageupload").child(ImageUploadId).setValue(imageUploadInfo);
 
-                            // Hiding the progressDialog.
-                            progressDialog.dismiss();
 
-                            // Showing exception erro message.
-                            Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
-
-                    // On progress change upload time.
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            // Setting progressDialog Title.
-                            progressDialog.setTitle("Image is Uploading...");
-
-                        }
-                    });
-
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
         }
-        else {
 
-            Toast.makeText(getActivity(), "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
 
-        }
     }
-
-
 }

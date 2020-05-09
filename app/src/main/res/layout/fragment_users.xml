@@ -3,17 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.machine.machine"
+    tools:context=".tab.UsersFragment"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUser"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/machine" />
+        />
 
 </FrameLayout>

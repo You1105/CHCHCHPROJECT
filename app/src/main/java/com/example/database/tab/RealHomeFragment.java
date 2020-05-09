@@ -1,6 +1,8 @@
 package com.example.database.tab;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +11,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.database.ImageUploadInfo;
+import com.example.database.MainActivity;
 import com.example.database.R;
 import com.example.database.RecyclerViewAdapter;
-import com.example.database.ui.home.HomeViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -29,71 +32,66 @@ import java.util.List;
 
 
 public class RealHomeFragment extends Fragment {
+    // Creating RecyclerView.Adapter.
 
+    // Creating RecyclerView.
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+    List<ImageUploadInfo> list;
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
-    public static final String Database_Path = "All_Image_Uploads_Database";
-
+    DatabaseReference databaseReference;
     // Creating Progress dialog
     ProgressDialog progressDialog;
-
-    RecyclerView recyclerView;
+    String stUid;
 
     // Creating List of ImageUploadInfo class.
-    List<ImageUploadInfo> list = new ArrayList<>();
-    // Assign id to RecyclerView.
 
-    private HomeViewModel homeViewModel;
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         //final TextView textView = root.findViewById(R.id.text_home);
-        DatabaseReference databaseReference;
-
+        final TextView textView = root.findViewById(R.id.text_home);
         // Creating RecyclerView.
         recyclerView=root.findViewById(R.id.recyclerView);
-
-
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
+        stUid = sharedPref.getString("key", "");
 
         // Setting RecyclerView size true.
         recyclerView.setHasFixedSize(true);
 
         // Setting RecyclerView layout as LinearLayout.
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        list = new ArrayList<>();
+        adapter = new RecyclerViewAdapter(getActivity(), list);
+        recyclerView.setAdapter(adapter);
 
-        // Assign activity this to progress dialog.
-        progressDialog = new ProgressDialog(getActivity());
+        //databaseReference = FirebaseDatabase.getInstance().getReference("users").child(stUid).child(RecyclerViewAdapter.Database_Path);
 
-        // Setting up message in Progress dialog.
-        progressDialog.setMessage("Loading Images From Firebase.");
+       databaseReference= FirebaseDatabase.getInstance().getReference("users").child(stUid).child("imageupload");
 
-        // Showing progress dialog.
-        progressDialog.show();
-
-        // Setting up Firebase image upload folder path in databaseReference.
-        // The path is already defined in MainActivity.
-        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
-
+       // databaseReference= FirebaseDatabase.getInstance().getReference("users");
 
         // Adding Add Value Event Listener to databaseReference.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot datasnapshot : dataSnapshot.getChildren()) {
 
-                    ImageUploadInfo imageUploadInfo = snapshot.getValue(ImageUploadInfo.class);
+                    ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
 
 
                     list.add(imageUploadInfo);
+
+
+                    adapter.notifyItemInserted(list.size() - 1);
                 }
 
-                adapter = new RecyclerViewAdapter(getActivity(), list);
 
-                recyclerView.setAdapter(adapter);
 
                 // Hiding the progress dialog.
-                progressDialog.dismiss();
+
             }
 
             @Override
@@ -107,7 +105,8 @@ public class RealHomeFragment extends Fragment {
 
         });
 
-
+        ActionBar actionBar=((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("Home");
         return root;
     }
 }

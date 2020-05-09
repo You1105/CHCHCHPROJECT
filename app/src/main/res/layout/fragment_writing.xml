@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab.WritingFragment">
+    tools:context=".tab.WritingFragment"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
 
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:hint="Enter Title"
+            android:hint="@string/hintTitle"
 
             app:layout_constraintStart_toEndOf="@id/textView"
             app:layout_constraintTop_toBottomOf="@id/spinner_year" />
@@ -51,7 +52,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="100dp"
 
-            android:text="Choose Image"
+            android:text="@string/btnImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ShowImageView"
 
@@ -67,7 +68,7 @@
             android:layout_marginLeft="25dp"
 
             android:layout_marginTop="30dp"
-            android:text="카테고리"
+            android:text="@string/category"
             android:textSize="20sp"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +97,7 @@
             android:layout_marginLeft="25dp"
 
             android:layout_marginTop="15dp"
-            android:text="제       목"
+            android:text="@string/title"
             android:textSize="20sp"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +111,7 @@
 
             android:layout_marginTop="350dp"
             android:gravity="center"
-            android:hint="Enter text"
+            android:hint="@string/hintText"
 
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -124,7 +125,7 @@
             android:layout_height="50dp"
 
             android:layout_marginTop="25dp"
-            android:text="Upload image to Firebase Storage"
+            android:text="@string/btnUpload"
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toStartOf="parent"

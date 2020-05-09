@@ -28,7 +28,7 @@
                 android:layout_marginEnd="57dp"
                 android:layout_marginRight="57dp"
                 android:layout_marginBottom="46dp"
-                android:text="Button"
+                android:text="@string/btnJjim"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="207dp"
                 android:gravity="center"
-                android:text="JSon Image Name"
+                android:text="@string/imageName"
                 android:textColor="#000"
                 android:textSize="20dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"

@@ -2,6 +2,7 @@ package com.example.database;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     List<ImageUploadInfo> MainImageUploadInfoList;
 
+
+    String stUid;
     int num=0;
     StorageReference storageReference;
     DatabaseReference databaseReference;
@@ -37,7 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(Context context, List<ImageUploadInfo> TempList) {
 
         this.MainImageUploadInfoList = TempList;
-
+        SharedPreferences sharedPref = context.getSharedPreferences("email", Context.MODE_PRIVATE);
+        stUid = sharedPref.getString("uid", "");
         this.context = context;
     }
 
@@ -75,6 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ImageView imageView;
         public TextView imageNameTextView;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -84,36 +89,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             button = (Button) itemView.findViewById(R.id.button);
 
             storageReference = FirebaseStorage.getInstance().getReference();
-            databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
+            databaseReference = FirebaseDatabase.getInstance().getReference("users").child(stUid).child(Database_Path);
+
+
             button.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    num++;
-                    int pos = getAdapterPosition();
 
-
-                        String ImageUploadId = databaseReference.push().getKey();
-
-                        if (num % 2 == 0) {
-                            if (pos != RecyclerView.NO_POSITION) {
-                                ImageUploadInfo imageUploadInfo = MainImageUploadInfoList.get(pos);
-                                button.setBackgroundColor(Color.WHITE);
-                                // Adding image upload id s child element into databaseReference.
-
-
-                           }}
-
-                       else {
-
-                           if (pos != RecyclerView.NO_POSITION) {
-                               ImageUploadInfo imageUploadInfo = MainImageUploadInfoList.get(pos);
-                               button.setBackgroundColor(Color.RED);
-
-                               // Adding image upload id s child element into databaseReference.
-                               databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
-                           }
-                       }
 
                    }
             });
@@ -128,19 +111,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View v) {
 
-
-                   int pos = getAdapterPosition();
-
-                    if (pos != RecyclerView.NO_POSITION) {
-                        ImageUploadInfo imageUploadInfo=MainImageUploadInfoList.get(pos);
-                    //  Toast.makeText(v.getContext(),""+imageUploadInfo.getImageName()+imageUploadInfo.getImageURL()+imageUploadInfo.gettext(), Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(v.getContext(),Detailed_Content.class);
-                    intent.putExtra("tit",imageUploadInfo.getImageName());
-                    intent.putExtra("tex",imageUploadInfo.gettext());
-                   intent.putExtra("image",imageUploadInfo.getImageURL());
-                   intent.putExtra("cate",imageUploadInfo.getcategory());
-                        v.getContext().startActivity(intent);
-                    }
 
                 }
 

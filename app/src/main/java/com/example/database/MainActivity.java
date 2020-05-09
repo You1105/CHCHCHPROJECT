@@ -1,22 +1,16 @@
 package com.example.database;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -24,17 +18,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.database.tab.ChatFragment;
 import com.example.database.tab.ProfileFragment;
 import com.example.database.tab.RealHomeFragment;
 import com.example.database.tab.SaveFragment;
+import com.example.database.tab.UsersFragment;
 import com.example.database.tab.WritingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     Uri FilePathUri;
     private RealHomeFragment fragHome;
-    private ChatFragment fragChat;
+    private UsersFragment fragUsers;
     private ProfileFragment fragProfile;
     private SaveFragment fragSave;
     private WritingFragment fragWriting;
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fragHome = new RealHomeFragment();
-        fragChat = new ChatFragment();
+        fragUsers = new UsersFragment();
         fragProfile = new ProfileFragment();
         fragSave = new SaveFragment();
         fragWriting = new WritingFragment();
@@ -121,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -145,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit(); //저장의미
                 break;
             case 1:
-                ft.replace(R.id.main_frame, fragChat);
+                ft.replace(R.id.main_frame,fragUsers);
                 ft.commit(); //저장의미
                 break;
             case 2:

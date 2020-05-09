@@ -16,9 +16,45 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="chatting">채 팅</string>
+    <string name="chat">채 팅</string>
     <string name="jjim"> 찜 </string>
     <string name="writing">글쓰기</string>
     <string name="mypage">마이페이지</string>
+
+    <string name="btnFinish">FINISH</string>
+    <string name="btnSend">SEND</string>
+    <string name="hint">메시지를 입력하세요</string>
+
+    <string name="login">로그인</string>
+    <string name="Register">회원가입</string>
+    <string name="hintId">Email</string>
+    <string name="hintPassword">Password</string>
+    <string name="btnLogin">로그인</string>
+    <string name="btnRegister">회원가입</string>
+
+    <string name="clothes">옷</string>
+    <string name="donation">기부</string>
+
+    <string name="profile">프 로 필</string>
+    <string name="logout">로그아웃</string>
+    <string name="mywriting">내가 쓴 글</string>
+
+    <string name="hintTitle">Enter Title</string>
+    <string name="btnImage">Choose Image</string>
+    <string name="category">카테고리</string>
+    <string name="title">제       목</string>
+    <string name="hintText">Enter text</string>
+    <string name="btnUpload">Upload image to Firebase Storage</string>
+
+    <string name="btnJjim">Button</string>
+    <string name="imageName">JSon Image Name</string>
+
+    <string name="machine">machine</string>
+
+    <string name="rental">렌탈</string>
+
+    <string name="stationery">문구</string>
+
+    <string name="toy">토이</string>
 
 </resources>
