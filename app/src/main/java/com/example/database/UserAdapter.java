@@ -94,9 +94,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                String stUserId = userArrayList.get(position).getKey();
+                String stUseUid = userArrayList.get(position).getKey();
+                String stUserEmail = userArrayList.get(position).getEmail();
                 Intent in = new Intent(context, ChatActivity.class);
-                in.putExtra("userUid", stUserId);
+                in.putExtra("userUid", stUseUid);
+                in.putExtra("userEmail", stUserEmail);
                 context.startActivity(in);
                 //키를 가져오게 되면 채팅 액티비티 클래스로 화면이 넘어감
             }
