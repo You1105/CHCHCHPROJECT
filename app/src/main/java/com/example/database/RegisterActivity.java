@@ -92,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity { long lastPressed;
 
                                     Hashtable<String, String> members = new Hashtable<String, String>();
                                     members.put("email", user.getEmail());
-                                    members.put("uid", user.getUid());
+                                    members.put("key", user.getUid());
                                     members.put("photo", "");
 //                                    members.put("photo", user.getPhotoUrl());
 //                                    myRef.child(user.getUid()).setValue(members);

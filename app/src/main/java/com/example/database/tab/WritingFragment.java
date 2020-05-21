@@ -244,7 +244,7 @@ public class WritingFragment extends Fragment {
 
                         // Showing toast message after done uploading.
                         Toast.makeText(getContext().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                        getActivity().getSupportFragmentManager().beginTransaction().add((R.id.main_frame), realHomeFragment).
+                        getActivity().getSupportFragmentManager().beginTransaction().add((R.id.nav_host_fragment), realHomeFragment).
                                 addToBackStack(null).commit();
 
                         // Intent in = new Intent(getActivity(), RealHomeFragment.class);

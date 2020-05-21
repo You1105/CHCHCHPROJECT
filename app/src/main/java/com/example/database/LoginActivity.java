@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                     Intent in = new Intent(LoginActivity.this, MainActivity.class);
                                     in.putExtra("email", stEmail);
-//                                    in.putExtra("uid", stUid);
                                     startActivity(in);
                                 } else {
                                     // If sign in fails, display a message to the user.

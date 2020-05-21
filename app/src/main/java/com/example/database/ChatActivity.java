@@ -130,8 +130,9 @@ public class ChatActivity extends AppCompatActivity {
 
                     // Write a message to the database
                     //데이터를 읽고 쓰기 위한 DatabaseReference 가져오기
+                    //순서의 일관성을 위해서 push가 아닌 시간(datetime)을 사용
                     DatabaseReference myRef = database.getReference("users").child(stChatId).child("message").child(datetime);
-//                    DatabaseReference myRef = database.getReference("users").child(user.getUid()).child("message").child(datetime); //순서의 일관성을 위해서 push가 아닌 시간(datetime)을 사용
+//                    DatabaseReference myRef = database.getReference("users").child(user.getUid()).child("message").child(datetime);
                     //Hashtable 객체 생성
                     Hashtable<String, String> message = new Hashtable<String, String>();
                     message.put("email", stEmail); //put(): 데이터 삽입

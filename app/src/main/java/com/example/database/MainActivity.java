@@ -30,19 +30,23 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
     int Image_Request_Code = 7;
     Button ChooseButton, UploadButton;
     private FragmentManager fm;
     private FragmentTransaction ft;
     Uri FilePathUri;
-    private RealHomeFragment fragHome;
-    private UsersFragment fragUsers;
-    private ProfileFragment fragProfile;
-    private SaveFragment fragSave;
-    private WritingFragment fragWriting;
+
     private AppBarConfiguration mAppBarConfiguration;
 
+    //바텀네비게이션
+    //FrameLayout에 각 메뉴의 Fragment를 바꿔줌
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    //5개의 메뉴에 들어갈 Fragment들
+    private UsersFragment usersFragment = new UsersFragment();
+    private SaveFragment saveFragment = new SaveFragment();
+    private ProfileFragment profileFragment = new ProfileFragment();
+    private RealHomeFragment realHomeFragment = new RealHomeFragment();
+    private WritingFragment writingFragment = new WritingFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,38 +54,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ChooseButton = (Button)findViewById(R.id.ButtonChooseImage);
         UploadButton = (Button)findViewById(R.id.ButtonUploadImage);
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.realhome:
-                        setFrag(0);
-                        break;
-                    case R.id.chat:
-                        setFrag(1);
-                        break;
-                    case R.id.profile:
-                        setFrag(2);
-                        break;
-                    case R.id.save:
-                        setFrag(3);
-                        break;
-                    case R.id.writing:
-                        setFrag(4);
-                        break;
-                }
-                return true;
-            }
-        });
-
-        fragHome = new RealHomeFragment();
-        fragUsers = new UsersFragment();
-        fragProfile = new ProfileFragment();
-        fragSave = new SaveFragment();
-        fragWriting = new WritingFragment();
-
-        setFrag(0); //첫 프래그먼트 화면을 무엇으로 지정해줄 것인지 선택
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,6 +76,42 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        //BottomNavigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        //첫 화면 지정
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, realHomeFragment).commitAllowingStateLoss();
+
+        //bottomNavigationView의 아이템이 선택될 때 호출된 리스너 등록
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                //switch~case문으로 프래그먼트 교체
+                switch (item.getItemId()){
+                    case R.id.chat:
+                        transaction.replace(R.id.nav_host_fragment, usersFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.save:
+                        transaction.replace(R.id.nav_host_fragment, saveFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.profile:
+                        transaction.replace(R.id.nav_host_fragment, profileFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.realhome:
+                        transaction.replace(R.id.nav_host_fragment, realHomeFragment).commitAllowingStateLoss();
+                        break;
+                    case R.id.writing:
+                        transaction.replace(R.id.nav_host_fragment, writingFragment).commitAllowingStateLoss();
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -121,35 +129,4 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
-    //프래그먼트 교체가 일어나는 실행문
-    private void setFrag(int n) {
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
-
-        switch (n) {
-            case 0:
-                ft.replace(R.id.main_frame,fragHome);
-                ft.commit(); //저장의미
-                break;
-            case 1:
-                ft.replace(R.id.main_frame,fragUsers);
-                ft.commit(); //저장의미
-                break;
-            case 2:
-                ft.replace(R.id.main_frame,fragProfile);
-                ft.commit(); //저장의미
-                break;
-            case 3:
-                ft.replace(R.id.main_frame,fragSave);
-                ft.commit(); //저장의미
-                break;
-            case 4:
-
-               ft.replace(R.id.main_frame, fragWriting );
-                ft.commit(); //저장의미
-                break;
-        }
-
-    }
 }
