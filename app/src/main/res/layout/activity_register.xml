@@ -6,22 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <Button
+        android:id="@+id/gpsbutton"
+        android:layout_width="190dp"
+        android:layout_height="38dp"
+        android:text="위치정보"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pb" />
+
+    <TextView
+        android:id="@+id/gpstext"
+        android:layout_width="196dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/gpsbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
     <TextView
         android:id="@+id/tvTitle"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
         android:layout_marginTop="100dp"
-
         android:text="@string/Register"
         android:textColor="#2196F3"
+
         android:textSize="30sp"
-        />
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -29,15 +50,14 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
         android:layout_marginTop="50dp"
-
         android:hint="@string/hintId"
         android:inputType="textEmailAddress"
-        />
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -45,34 +65,14 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/etEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
         android:layout_marginTop="25dp"
-
         android:hint="@string/hintPassword"
         android:inputType="textPassword"
-        />
 
-    <Button
-        android:id="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
 
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
         app:layout_constraintStart_toStartOf="parent"
-
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-
-        android:text="@string/btnLogin"
-        android:textColor="#ffffff"
-
-        android:background="#3F51B5"
-        />
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -80,18 +80,46 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="11dp"
 
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="112dp"
 
-        android:text="@string/btnRegister"
-        android:textColor="#ffffff"
+        android:layout_marginRight="112dp"
+        android:layout_marginBottom="221dp"
 
         android:background="#3F51B5"
-        />
+        android:text="@string/btnRegister"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/gpsbutton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnLogin"
+
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="11dp"
+
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="221dp"
+
+        android:background="#3F51B5"
+        android:text="@string/btnLogin"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gpsbutton" />
 
     <ProgressBar
         android:id="@+id/pb"
@@ -99,12 +127,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-
         android:visibility="gone"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
