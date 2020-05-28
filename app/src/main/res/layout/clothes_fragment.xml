@@ -12,12 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/clothes"
-            tools:layout_editor_absoluteX="47dp"
-            tools:layout_editor_absoluteY="54dp" />
+            android:layout_height="match_parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

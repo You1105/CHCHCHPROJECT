@@ -1,5 +1,7 @@
 package com.example.database.tab;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.database.ImageUploadInfo;
@@ -43,7 +47,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class WritingFragment extends Fragment {
-    public final String Database_Path = "users";
+
 
     private RealHomeFragment realHomeFragment;
 
@@ -65,7 +69,8 @@ public class WritingFragment extends Fragment {
 
     // Creating URI.
     Uri FilePathUri;
-    String stUid;
+    String stUid,gps;
+
     Spinner yearSpinner;
 
     // Creating StorageReference and DatabaseReference object.
@@ -83,8 +88,11 @@ public class WritingFragment extends Fragment {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_writing, container, false);
 
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
+        gps=sharedPref.getString("gps","");
+
 
 
         // Assign FirebaseStorage instance to storageReference.
@@ -95,9 +103,9 @@ public class WritingFragment extends Fragment {
         yearSpinner.setAdapter(yearAdapter);
 
 
-            //databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(stChatId).child("uploadimage");}
+        // databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(stUid).child("imageupload");
         //Assign ID'S to button.
-           databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
         ChooseButton = root.findViewById(R.id.ButtonChooseImage);
         UploadButton = root.findViewById(R.id.ButtonUploadImage);
 
@@ -154,30 +162,30 @@ public class WritingFragment extends Fragment {
     }
 
 
- @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-           if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-               FilePathUri = data.getData();
+            FilePathUri = data.getData();
 
-               try {
+            try {
 
-                   // Getting selected image into Bitmap.
-                   Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), FilePathUri);
+                // Getting selected image into Bitmap.
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), FilePathUri);
 
-                   // Setting up bitmap selected image into ImageView.
-                   SelectImage.setImageBitmap(bitmap);
+                // Setting up bitmap selected image into ImageView.
+                SelectImage.setImageBitmap(bitmap);
 
-                   // After selecting image change choose button above text.
-                   ChooseButton.setText("Image Selected");
+                // After selecting image change choose button above text.
+                ChooseButton.setText("Image Selected");
 
-               }
-               catch (IOException e) {
+            }
+            catch (IOException e) {
 
-                   e.printStackTrace();
-               }
-           }
+                e.printStackTrace();
+            }
+        }
 
 
     }
@@ -207,8 +215,7 @@ public class WritingFragment extends Fragment {
             progressDialog.show();
 
             // Creating second StorageReference.
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis()
-                    + "." + GetFileExtension(FilePathUri));
+            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
 
 
             UploadTask uploadTask = storageReference2nd.putFile(FilePathUri);
@@ -232,8 +239,7 @@ public class WritingFragment extends Fragment {
                         Log.d("url", Url);
 
                         // Write a message to the database
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("users");
+
 
                         String TempImageName = ImageName.getText().toString().trim();
                         String TempText = Text.getText().toString().trim();
@@ -241,25 +247,20 @@ public class WritingFragment extends Fragment {
 
                         progressDialog.dismiss();
                         realHomeFragment = new RealHomeFragment();
-
+                        RealHomeFragment fragHome = new RealHomeFragment();
                         // Showing toast message after done uploading.
                         Toast.makeText(getContext().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                        getActivity().getSupportFragmentManager().beginTransaction().add((R.id.nav_host_fragment), realHomeFragment).
-                                addToBackStack(null).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().add((R.id.nav_host_fragment), realHomeFragment).addToBackStack(null).commit();
 
-                        // Intent in = new Intent(getActivity(), RealHomeFragment.class);
-                        // startActivity(in);
 
-                        // @SuppressWarnings("VisibleForTests")
                         final ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, Url, TempText, category);
 
 
-                        // Getting image upload ID.
-                        String ImageUploadId = databaseReference.child(stUid).child("imageupload").push().getKey();
+                        //users 밑 gps 밑 자신의 아이디(stUid) 밑 imageupload 밑에 키값을 부여합니다.
+                        String ImageUploadId = databaseReference.child(gps).child(stUid).child("imageupload").push().getKey();
 
 
-                        // Adding image upload id s child element into databaseReference.
-                        databaseReference.child(stUid).child("imageupload").child(ImageUploadId).setValue(imageUploadInfo);
+                        databaseReference.child(gps).child(stUid).child("imageupload").child(ImageUploadId).setValue(imageUploadInfo);
 
 
                     } else {
@@ -269,7 +270,5 @@ public class WritingFragment extends Fragment {
                 }
             });
         }
-
-
     }
 }

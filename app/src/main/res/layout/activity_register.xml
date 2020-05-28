@@ -5,29 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
-
     <Button
         android:id="@+id/gpsbutton"
-        android:layout_width="190dp"
-        android:layout_height="38dp"
-        android:text="위치정보"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        android:layout_width="124dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="265dp"
+        android:layout_marginLeft="265dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pb" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gpstext"
-        android:layout_width="196dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/gpsbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
-
+        android:layout_width="228dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
     <TextView
         android:id="@+id/tvTitle"
 
@@ -36,10 +38,10 @@
 
         android:layout_marginTop="100dp"
         android:text="@string/Register"
+
         android:textColor="#2196F3"
 
         android:textSize="30sp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,12 +54,11 @@
 
         android:layout_marginTop="50dp"
         android:hint="@string/hintId"
+
         android:inputType="textEmailAddress"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -67,59 +68,48 @@
 
         android:layout_marginTop="25dp"
         android:hint="@string/hintPassword"
+
         android:inputType="textPassword"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+    <Button
+        android:id="@+id/btnLogin"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="92dp"
+
+        android:layout_marginEnd="11dp"
+
+        android:layout_marginRight="11dp"
+        android:background="#3F51B5"
+        android:text="@string/btnLogin"
+        android:textColor="#ffffff"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnRegister"
+        app:layout_constraintEnd_toStartOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnRegister"
 
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="11dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
 
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="112dp"
-
-        android:layout_marginRight="112dp"
-        android:layout_marginBottom="221dp"
+        android:layout_marginBottom="17dp"
 
         android:background="#3F51B5"
         android:text="@string/btnRegister"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/gpsbutton"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnLogin"
-
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="88dp"
-        android:layout_marginLeft="88dp"
-
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="11dp"
-
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="221dp"
-
-        android:background="#3F51B5"
-        android:text="@string/btnLogin"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRegister"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gpsbutton" />
+        app:layout_constraintStart_toEndOf="@+id/btnLogin" />
 
     <ProgressBar
         android:id="@+id/pb"
@@ -127,11 +117,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_marginTop="60dp"
+
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
-        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSend"
+        app:layout_constraintStart_toStartOf="@+id/buttonSend" />
+
+    <EditText
+        android:id="@+id/editEmailCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="138dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginBottom="11dp"
+        android:text="이메일보내기"
+        app:layout_constraintBottom_toTopOf="@+id/editEmailCode"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSend2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="7dp"
+        android:text="인증하기"
+        app:layout_constraintStart_toStartOf="@+id/editEmailCode"
+        app:layout_constraintTop_toBottomOf="@+id/editEmailCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

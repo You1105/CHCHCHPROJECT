@@ -56,5 +56,6 @@
     <string name="stationery">문구</string>
 
     <string name="toy">토이</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

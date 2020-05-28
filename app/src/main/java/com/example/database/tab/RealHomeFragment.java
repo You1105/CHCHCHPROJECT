@@ -1,9 +1,14 @@
 package com.example.database.tab;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +40,7 @@ import java.util.List;
 public class RealHomeFragment extends Fragment {
     // Creating RecyclerView.Adapter.
 
+    Parcelable recyclerViewState;
     // Creating RecyclerView.
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -44,8 +51,10 @@ public class RealHomeFragment extends Fragment {
     // Creating Progress dialog
     ProgressDialog progressDialog;
     String stUid;
-
-    // Creating List of ImageUploadInfo class.
+    String key;
+    String gps;
+    private int someVarA;
+    private String someVarB;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstanceState) {
@@ -56,57 +65,68 @@ public class RealHomeFragment extends Fragment {
         recyclerView=root.findViewById(R.id.recyclerView);
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
+        gps=sharedPref.getString("gps", "");
 
-        // Setting RecyclerView size true.
         recyclerView.setHasFixedSize(true);
 
-        // Setting RecyclerView layout as LinearLayout.
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         list = new ArrayList<>();
         adapter = new RecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
 
-        //databaseReference = FirebaseDatabase.getInstance().getReference("users").child(stUid).child(RecyclerViewAdapter.Database_Path);
 
-       databaseReference= FirebaseDatabase.getInstance().getReference("users").child(stUid).child("imageupload");
+        //users 밑 gps 경로 지정합니다.
+        databaseReference= FirebaseDatabase.getInstance().getReference("users").child(gps);
 
-       // databaseReference= FirebaseDatabase.getInstance().getReference("users");
+        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬합니다.
+        final Query query=databaseReference.orderByChild("imageupload");
 
-        // Adding Add Value Event Listener to databaseReference.
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot datasnapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    key=postSnapshot.getKey();
+                    //Query를 사용해서 가져온 모든 key값 아래 imageupload 아래의 정보를 가져옵니다.
+                    databaseReference.child(key).child("imageupload").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot datasnapshot : dataSnapshot.getChildren()){
+                                ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
+
+                                list.add(imageUploadInfo);
+
+                                adapter.notifyItemInserted(list.size() - 1);
 
 
-                    list.add(imageUploadInfo);
+                            }
 
+                        }
 
-                    adapter.notifyItemInserted(list.size() - 1);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
-
-
-
-                // Hiding the progress dialog.
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-
+                Log.w("getFirebaseDatabase","loadPost:onCancelled", databaseError.toException());
             }
-
-
         });
 
+
+     
         ActionBar actionBar=((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("Home");
         return root;
     }
+
+
 }

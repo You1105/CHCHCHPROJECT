@@ -1,5 +1,7 @@
 package com.example.database.tab;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,8 @@ public class UsersFragment extends Fragment {
 
     FirebaseDatabase database;
 
+
+    String stUid,gps;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -63,8 +67,12 @@ public class UsersFragment extends Fragment {
         mUserAdapter= new UserAdapter(userArrayList, getActivity());
         recyclerView.setAdapter(mUserAdapter);
 
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("shared", Context.MODE_PRIVATE);
+        stUid = sharedPref.getString("key", "");
+        gps= sharedPref.getString("gps", "");
+
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
+        DatabaseReference myRef = database.getReference("users").child(gps);
 
         //데이터베이스 읽기
         //addListenerForSingleValueEvent() 메소드로 데이터 한 번 읽기

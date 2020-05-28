@@ -41,74 +41,7 @@ String stUid;
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-       DatabaseReference databaseReference;
 
-        // Creating RecyclerView.
-         /*  recyclerView=root.findViewById(R.id.recyclerView);
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("email", Context.MODE_PRIVATE);
-        stUid = sharedPref.getString("uid", "");
-
-
-
-        // Setting RecyclerView size true.
-        recyclerView.setHasFixedSize(true);
-
-        // Setting RecyclerView layout as LinearLayout.
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        // Assign activity this to progress dialog.
-        progressDialog = new ProgressDialog(getActivity());
-
-        // Setting up message in Progress dialog.
-        progressDialog.setMessage("Loading Images From Firebase.");
-
-        // Showing progress dialog.
-        progressDialog.show();
-
-        // Setting up Firebase image upload folder path in databaseReference.
-        // The path is already defined in MainActivity.
-     databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(stUid).child("imageupload");
-
-        // databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(ChatActivity.stChatId).child("UploadImage");
-
-
-        // Adding Add Value Event Listener to databaseReference.
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    ImageUploadInfo imageUploadInfo = snapshot.getValue(ImageUploadInfo.class);
-
-
-                    list.add(imageUploadInfo);
-                }
-
-                adapter = new RecyclerViewAdapter(getActivity().getApplicationContext(), list);
-
-                recyclerView.setAdapter(adapter);
-
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-
-            }
-
-
-        });
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 }
