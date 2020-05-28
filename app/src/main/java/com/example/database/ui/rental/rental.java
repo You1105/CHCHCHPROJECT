@@ -1,6 +1,5 @@
 package com.example.database.ui.rental;
 
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,9 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.database.R;
 public class rental extends Fragment {
-
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
@@ -44,24 +41,18 @@ public class rental extends Fragment {
     String stUid;
     String key;
     String gps;
-
-    //뷰모델 선언
     private RentalViewModel mViewModel;
 
     public static rental newInstance() {
         return new rental();
     }
 
-    //카테고리에서 의류를 선택했을 시 rental_fragment 보여줌
-    //Layout을 inflate 하는 곳, View 객체를얻어서 초기화
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root= inflater.inflate(R.layout.rental_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
 
-        //SharedPreferences로 저장된 데이터 불러오기
-        //key(uid) 값과 gps 불러오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
         gps= sharedPref.getString("gps", "");
@@ -84,7 +75,6 @@ public class rental extends Fragment {
 
         final Query query=databaseReference.orderByChild("imageupload");
 
-        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +120,9 @@ public class rental extends Fragment {
         return root;
     }
 
-    //Fragment 생성 이후 호출 하는 함수
+
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

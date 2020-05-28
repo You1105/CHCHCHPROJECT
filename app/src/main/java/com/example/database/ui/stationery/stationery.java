@@ -1,4 +1,4 @@
-package com.example.database.ui.donation;
+package com.example.database.ui.stationery;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,9 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class donation extends Fragment {
-
-    private DonationViewModel mViewModel;
+public class stationery extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
@@ -43,14 +41,16 @@ public class donation extends Fragment {
     String stUid;
     String key;
     String gps;
-    public static donation newInstance() {
-        return new donation();
+    private StationeryViewModel mViewModel;
+
+    public static stationery newInstance() {
+        return new stationery();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.donation_fragment, container, false);
+        View root= inflater.inflate(R.layout.stationery_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
@@ -122,10 +122,11 @@ public class donation extends Fragment {
 
 
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DonationViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(StationeryViewModel.class);
         // TODO: Use the ViewModel
     }
 
