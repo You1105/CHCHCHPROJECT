@@ -47,12 +47,16 @@ public class toy extends Fragment {
         return new toy();
     }
 
+    //카테고리에서 장난감을 선택했을 시 toy_fragment 보여줌
+    //Layout을 inflate 하는 곳, View 객체를얻어서 초기화
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
        View root= inflater.inflate(R.layout.toy_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
 
+        //SharedPreferences로 저장된 데이터 불러오기
+        //key(uid) 값과 gps 불러오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
         gps= sharedPref.getString("gps", "");
@@ -73,6 +77,7 @@ public class toy extends Fragment {
 
         databaseReference= FirebaseDatabase.getInstance().getReference("users").child(gps);
 
+        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         final Query query=databaseReference.orderByChild("imageupload");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
