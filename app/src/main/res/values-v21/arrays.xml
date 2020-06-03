@@ -7,7 +7,12 @@
     <item>문구</item>
     <item>대여</item>
     <item>기부</item>
-
-
 </string-array>
+
+<string-array name="deal">
+    <item>교환미완료</item>
+    <item>거래중</item>
+    <item>교환완료</item>
+</string-array>
+
 </resources>

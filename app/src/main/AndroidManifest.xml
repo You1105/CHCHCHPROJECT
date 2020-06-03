@@ -22,11 +22,16 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChatActivity" />
+
+        <activity android:name=".MyAdapter" />
+        <activity android:name=".RecyclerViewAdapter" />
+        <activity android:name=".Detailed_Content" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".FirstpageActivity">
+        <activity android:name=".FirstpageActivity"
+            android:label="change">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -6,17 +6,16 @@
         android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="home"/>
-
-    <item
-        android:id="@+id/chat"
-        android:enabled="true"
-        android:icon="@drawable/ic_chat_black_24dp"
-        android:title="chat"/>
     <item
         android:id="@+id/save"
         android:enabled="true"
         android:icon="@drawable/ic_check_circle_black_24dp"
         android:title="save"/>
+    <item
+        android:id="@+id/chat"
+        android:enabled="true"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="chat"/>
     <item
         android:id="@+id/writing"
         android:enabled="true"

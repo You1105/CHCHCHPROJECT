@@ -51,7 +51,7 @@ import java.util.Hashtable;
 
 public class ProfileFragment extends Fragment {
 
-    private static final String TAG = "NotificationsFragment";
+    private static final String TAG = "ProfileFragment";
 
     int REQUEST_IMAGE_CODE = 1001;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION = 1002;
