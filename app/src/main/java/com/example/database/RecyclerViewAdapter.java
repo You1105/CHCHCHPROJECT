@@ -108,90 +108,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //리사이클러뷰 아이템뷰를 클릭 호출
             itemView.setOnClickListener(new View.OnClickListener() {
-                String emailimage;
-                String keyimage;
+
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    ab=pos+"";
-                    Log.d("125",ab+"");
                     //아이템뷰 클릭 했을 때 그 위치 받아오기
+                    int pos = getAdapterPosition();
+
                     if (pos != RecyclerView.NO_POSITION) {
                         //위치 값에 있는 내용 값 받아오기
                         imageUploadInfo=MainImageUploadInfoList.get(pos);
 
-                        imagurlcheck=imageUploadInfo.getImageURL();
-                        Log.d("15q34qe6", imagurlcheck);
-
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                                for ( DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                                    key=postSnapshot.getKey();
-                                    String a=postSnapshot.getValue()+"";
-                                    Log.d("1251626246",a);
-
-                                    found=a.contains(imagurlcheck);
-                                    if(found==true){
-                                        String r=postSnapshot.getValue()+"";
-
-                                        String [] aa=r.split(",");
-                                        Log.d("ttteee",aa+"");
-
-                                        for(String string :aa){
-                                            Log.d("125q46",string);
-                                            if(string.contains("email")){
-                                                emailimage=string.substring(7);
-                                                Log.d("12556556",emailimage);
-                                                for(String ss:aa){
-                                                    if(ss.contains(("key"))){
-                                                        keyimage=ss.substring(5);
-                                                        Intent in = new Intent(context, Detailed_Content.class);
-                                                        in.putExtra("chatid", emailimage);
-                                                        in.putExtra("tit",imageUploadInfo.getImageName());
-                                                        in.putExtra("chatkey", keyimage);
-                                                        in.putExtra("tex",imageUploadInfo.gettext());
-                                                        in.putExtra("image",imageUploadInfo.getImageURL());
-                                                        in.putExtra("cate",imageUploadInfo.getcategory());
-                                                        context.startActivity(in);
-
-                                                    }
-                                                }
-
-
-
-
-                                            }
-
-                                        }
-
-                                    }}
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.w("getFirebaseDatabase","loadPost:onCancelled", databaseError.toException());
-                            }
-                        });
-
-
                         //클릭한 후 Detailed_Content.Class로 데이터 공유하기
-
-
-                       /*Intent intent=new Intent(v.getContext(),Detailed_Content.class);
-
+                        Intent intent=new Intent(v.getContext(),Detailed_Content.class);
                         //키값의 이름을 지정한 후 공유할 데이터 값을 적어두기
-                      intent.putExtra("tit",imageUploadInfo.getImageName());
-                      intent.putExtra("tex",imageUploadInfo.gettext());
-                       intent.putExtra("image",imageUploadInfo.getImageURL());
-                       intent.putExtra("cate",imageUploadInfo.getcategory());
+                        intent.putExtra("tit",imageUploadInfo.getImageName());
+                        intent.putExtra("tex",imageUploadInfo.gettext());
+                        intent.putExtra("image",imageUploadInfo.getImageURL());
+                        intent.putExtra("cate",imageUploadInfo.getcategory());
                         v.getContext().startActivity(intent);
 
-*/
+
                     }
 
                 }
