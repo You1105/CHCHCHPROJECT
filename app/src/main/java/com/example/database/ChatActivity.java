@@ -2,7 +2,6 @@ package com.example.database;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
 
     String Email;
     String stEmail, stText;
-    String stChatId;
+
     ArrayList<Chat> chatArrayList;
 
     String gps;
@@ -59,13 +58,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        //SharedPreferences로 이메일 값 가져오기
         SharedPreferences sharedPref = getSharedPreferences("shared", Context.MODE_PRIVATE);
-        myemail=sharedPref.getString("email","");
-
+        gps=  sharedPref.getString("gps", "");
         etText = (EditText)findViewById(R.id.etText);
 
+        myemail=sharedPref.getString("email","");
         Log.d("dgag",myemail);
         stEmail = getIntent().getStringExtra("userEmail");
         Log.d("gdag",stEmail);
@@ -92,7 +89,8 @@ public class ChatActivity extends AppCompatActivity {
         String[] myDataset = {"test1", "test2", "test3", "test4"};
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(chatArrayList, stEmail, ChatActivity.this);
+        mAdapter = new MyAdapter(chatArrayList,myemail+"->"+stEmail, ChatActivity.this);
+
         recyclerView.setAdapter(mAdapter);
 
         database = FirebaseDatabase.getInstance();
@@ -116,8 +114,8 @@ public class ChatActivity extends AppCompatActivity {
 //            String uid = user.getUid();
         }
 
-        Intent in = getIntent();
-        stChatId = in.getStringExtra("userUid");
+
+
 
         Email = getIntent().getStringExtra("userEmail");
         btnSend = (Button)findViewById(R.id.btnSend);
@@ -164,7 +162,10 @@ public class ChatActivity extends AppCompatActivity {
 
                 // A new comment has been added, add it to the displayed list
                 Chat chat = dataSnapshot.getValue(Chat.class);
+                final String stPhoto = getIntent().getStringExtra("userPhoto");
+                chat.setPhoto(stPhoto);
 
+                Log.d("gah",stPhoto);
                 String STEmail = chat.getEmail();
                 String stText = chat.getText();
                 Log.d(TAG, "stEmail: " + STEmail);
