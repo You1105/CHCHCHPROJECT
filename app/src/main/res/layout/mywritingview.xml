@@ -11,16 +11,15 @@
     card_view:cardCornerRadius="5dp"
     card_view:cardMaxElevation="5dp"
     >
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="250dp"
-        android:background="@drawable/button">
+        android:background="#ECEFF1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:background="@drawable/button">
             <TextView
                 android:id="@+id/ImageNameTextView"
                 android:layout_width="wrap_content"
@@ -38,13 +37,16 @@
                 android:id="@+id/imageView"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@mipmap/ic_launcher"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginLeft="30dp"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.187" />
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"

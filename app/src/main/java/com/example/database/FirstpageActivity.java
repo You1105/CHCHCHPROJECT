@@ -15,6 +15,7 @@ public class FirstpageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firstpage);
 
         Handler timer = new Handler();
+        //타이머를 사용하여 1초뒤에 로그인 페이지가 띄워지게 하기
         timer.postDelayed(new Runnable() {
             @Override
             public void run() {

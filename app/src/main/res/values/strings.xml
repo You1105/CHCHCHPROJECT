@@ -25,12 +25,12 @@
     <string name="btnSend">SEND</string>
     <string name="hint">메시지를 입력하세요</string>
 
-    <string name="login">로그인</string>
-    <string name="Register">회원가입</string>
+    <string name="login">LOGIN</string>
+    <string name="Register">JOIN US</string>
     <string name="hintId">Email</string>
     <string name="hintPassword">Password</string>
-    <string name="btnLogin">로그인</string>
-    <string name="btnRegister">회원가입</string>
+    <string name="btnLogin">GO LOGIN</string>
+    <string name="btnRegister">JOIN US</string>
 
     <string name="clothes">옷</string>
     <string name="donation">기부</string>

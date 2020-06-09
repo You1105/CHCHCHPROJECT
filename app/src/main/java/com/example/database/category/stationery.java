@@ -1,4 +1,4 @@
-package com.example.database.ui.stationery;
+package com.example.database.category;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +40,6 @@ public class stationery extends Fragment {
     String stUid;
     String key;
     String gps;
-    private StationeryViewModel mViewModel;
 
     public static stationery newInstance() {
         return new stationery();
@@ -124,15 +122,4 @@ public class stationery extends Fragment {
 
         return root;
     }
-
-
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(StationeryViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

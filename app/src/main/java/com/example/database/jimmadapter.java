@@ -12,30 +12,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.database.tab.SaveFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-/**
- * Created by AndroidJSon.com on 6/18/2017.
- */
 
 public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
 
+    //어댑터는 RecyclerView.Adapter를 상속하여 구현해야 한다.
+    //어댑터 클래스 상속시 구현해야할 함수 3가지
+    //onCreateViewHolder, onBindViewHolder, getItemCount
+
+
+    //변수 선언
     private static final String TAG = "jimmadapter";
 
     Context context;
@@ -48,10 +46,9 @@ public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
 
     String gps;
     String stUid;
-    int num=0;
+
     StorageReference storageReference;
-    DatabaseReference databaseReference;
-    FirebaseDatabase database;
+
 
     String ImageUploadId;
     public jimmadapter(Context context, List<ImageUploadInfo> TempList) {
@@ -65,15 +62,18 @@ public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
         this.context = context;
     }
 
+    //onCreateViewHolder(): 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //화면에 보여질 layout지정
+        //ViewHolder와 레이아웃 파일을 연결
+        //리사이클러뷰에 들어갈 뷰 홀더를 할당하는 함수, 뷰 홀더는 실제 레이아웃 파일과 매핑되어야하며, extends의 Adapter<>에서 <>안에 들어가는 타입을 따름
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jimmview, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
     }
 
+    //onBindViewHolder(): position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ImageUploadInfo UploadInfo = MainImageUploadInfoList.get(position);
@@ -83,13 +83,11 @@ public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
         Glide.with(context).load(UploadInfo.getImageURL()).into(holder.imageView);
     }
 
+    //getItemCount(): 전체 데이터 개수를 리턴한다.
     @Override
     public int getItemCount() {
-
         return MainImageUploadInfoList.size();
     }
-
-
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -107,56 +105,8 @@ public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
             button = (Button) itemView.findViewById(R.id.button);
 
             storageReference = FirebaseStorage.getInstance().getReference();
-
-
-            SharedPreferences sharedPref = context.getSharedPreferences("image", Context.MODE_PRIVATE);
-            final String ImageUploadId = sharedPref.getString("ImageUploadId", "");
-
+            //users아래 경로
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//            final  applesQuery = databaseReference.child(stUid).orderByChild("jjim").equalTo(ImageUploadId);
-
-            /*button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    databaseReference.child(stUid).orderByChild("jjim").equalTo(ImageUploadId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                                appleSnapshot.getRef().removeValue();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "onCancelled", databaseError.toException());
-                        }
-                    });
-                }
-            });*/
-
-
-
-
-/*            button.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-
-                    num++;
-                    int pos = getAdapterPosition();
-
-                    imageUploadInfo = MainImageUploadInfoList.get(pos);
-                    imagurlcheck = imageUploadInfo.getImageURL();
-
-                    if (pos != RecyclerView.NO_POSITION) {
-                        // ImageUploadInfo imageUploadInfo = MainImageUploadInfoList.get(pos);
-                        button.setBackgroundColor(Color.WHITE);
-                        // Adding image upload id s child element into databaseReference.
-
-                        databaseReference.child(stUid).child("jimm").child(ImageUploadId).setValue("");
-                    }
-                }
-            });*/
 
 
             button.setOnClickListener(new View.OnClickListener(){
@@ -194,11 +144,12 @@ public class jimmadapter extends RecyclerView.Adapter<jimmadapter.ViewHolder> {
                                             if (string.contains("key")) {
                                                 //3번째부터 받아오기
                                                 String jimmdelete=string.substring(3);
-                                                //버튼 색깔 하얀색으로 지정
-                                                button.setBackgroundColor(Color.WHITE);
+
                                                 // stUid 아래 jimm 아래 위에서 받아온 키 값아래 정보 삭제
                                                 databaseReference.child(stUid).child("jimm").child(jimmdelete).removeValue(null);
+                                                //자신의 아이디 밑 jimm밑 imageuploadid 밑에 넣어주기
 
+                                                Toast.makeText(context.getApplicationContext(),imageUploadInfo.getImageName()+"이(가) 취소되었습니다.", Toast.LENGTH_LONG).show();
                                             }
 
                                         }

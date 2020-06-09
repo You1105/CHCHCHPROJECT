@@ -1,4 +1,4 @@
-package com.example.database.tab;
+package com.example.database;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -24,9 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
-import com.example.database.ImageUploadInfo;
-import com.example.database.MainActivity;
-import com.example.database.R;
+import com.example.database.tab.RealHomeFragment;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +37,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class WritingFragment extends Fragment {
 
@@ -102,7 +99,7 @@ public class WritingFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "사진을 선택해주세요."), Image_Request_Code);
+                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
 
             }
         });
@@ -190,17 +187,17 @@ public class WritingFragment extends Fragment {
 
                         progressDialog.dismiss();
                         realHomeFragment = new RealHomeFragment();
-
+                        RealHomeFragment fragHome = new RealHomeFragment();
                         //이름이 없을 시
                         if( TempImageName.equals("")){
-                            Toast.makeText(getContext().getApplicationContext(), "제목을 입력하세요.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext().getApplicationContext(), "Please insert ImageName", Toast.LENGTH_LONG).show();
                         }
                         //내용이 없을 시
                         else if(TempText.equals("")){
-                            Toast.makeText(getContext().getApplicationContext(), "내용을 입력하세요.", Toast.LENGTH_LONG).show();}
+                            Toast.makeText(getContext().getApplicationContext(), "Please insert Text", Toast.LENGTH_LONG).show();}
                         //다 작성 했을 시
                         else{
-                            Toast.makeText(getContext().getApplicationContext(), "게시글 업로드 성공", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                             getActivity().getSupportFragmentManager().beginTransaction().add((R.id.nav_host_fragment), realHomeFragment).addToBackStack(null).commit();
 
                             final ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, Url, TempText, category);
@@ -221,7 +218,7 @@ public class WritingFragment extends Fragment {
             });
         }
         else{
-            Toast.makeText(getContext().getApplicationContext(), "게시글 업로드 중... ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext().getApplicationContext(), "Image select please ", Toast.LENGTH_LONG).show();
         }
 
     }

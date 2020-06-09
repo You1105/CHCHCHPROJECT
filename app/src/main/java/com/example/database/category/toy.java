@@ -1,4 +1,4 @@
-package com.example.database.ui.clothes;
+package com.example.database.category;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,8 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class clothes extends Fragment {
-    // Creating RecyclerView.
+public class toy extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
@@ -42,30 +40,27 @@ public class clothes extends Fragment {
     String stUid;
     String key;
     String gps;
-    //뷰모델 선언
-    private ClothesViewModel mViewModel;
 
-
-    public static clothes newInstance() {
-        return new clothes();
+    public static toy newInstance() {
+        return new toy();
     }
 
-    //카테고리에서 의류를 선택했을 시 clothes_fragment를 보여줌
+    //카테고리에서 장난감을 선택했을 시 toy_fragment 보여줌
     //Layout을 inflate 하는 곳, View 객체를얻어서 초기화
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.clothes_fragment, container, false);
+       View root= inflater.inflate(R.layout.toy_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
-
 
         //SharedPreferences로 저장된 데이터 불러오기
         //key(uid) 값과 gps 불러오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
-        gps=sharedPref.getString("gps", "");
-
+        gps= sharedPref.getString("gps", "");
         Log.d("ddd",stUid);
+
+
 
         // Setting RecyclerView size true.
         recyclerView.setHasFixedSize(true);
@@ -80,9 +75,9 @@ public class clothes extends Fragment {
 
         databaseReference= FirebaseDatabase.getInstance().getReference("users").child(gps);
 
+        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         final Query query=databaseReference.orderByChild("imageupload");
 
-        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,6 +86,9 @@ public class clothes extends Fragment {
 
                     key=postSnapshot.getKey();
 
+
+
+
                     databaseReference.child(key).child("imageupload").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,7 +96,7 @@ public class clothes extends Fragment {
 
                                 ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
 
-                                if (imageUploadInfo.getcategory().equals("의류")) {
+                                if (imageUploadInfo.getcategory().equals("장난감")) {
                                     list.add(imageUploadInfo);
                                     adapter.notifyItemInserted(list.size() - 1);}
 
@@ -124,13 +122,4 @@ public class clothes extends Fragment {
 
         return root;
     }
-
-    //Fragment 생성 이후 호출 하는 함수
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ClothesViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

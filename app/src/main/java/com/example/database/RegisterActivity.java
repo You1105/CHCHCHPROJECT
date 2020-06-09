@@ -37,31 +37,13 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Hashtable;
 import static com.example.database.SendMail.context;
 
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener { long lastPressed;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+
+    long lastPressed;
+
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     GpsTracker gpsTracker;
@@ -76,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     //email code
-//button, edit text 선언
+    //button, edit text 선언
     private EditText editTextEmail;
     private EditText editEmailCode;
     private EditText editTextSubject;
@@ -92,15 +74,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //Initializing the views
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editEmailCode = (EditText) findViewById(R.id.editEmailCode);
-        // editTextSubject = (EditText) findViewById(R.id.editTextSubject);
-        // editTextMessage = (EditText) findViewById(R.id.editTextMessage);
+
         //클릭 리스너 추가
         buttonSend = (Button) findViewById(R.id.buttonSend);
 
-        //Adding click listener
+
         buttonSend.setOnClickListener(this);
         buttonSend2 = (Button) findViewById(R.id.buttonSend2);
         buttonSend2.setOnClickListener(this);
@@ -128,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
         final TextView textview_address = (TextView)findViewById(R.id.gpstext);
 
-
+        //gps위치 받아오는 버튼 클릭
         Button  gpsbutton = (Button) findViewById(R.id.gpsbutton);
         gpsbutton.setOnClickListener(new View.OnClickListener()
         {
@@ -144,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String address = getCurrentAddress(latitude, longitude);
                 textview_address.setText(address);
                 String str = address;
+                //5번째부터 시까지 받아오기
                 result = str.substring(5,str.lastIndexOf("시")+1);
                 SharedPreferences sharedPref = getSharedPreferences("shared" , Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -157,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(RegisterActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
             }
         });
-//회원가입
+    //회원가입
 
 
 
@@ -166,9 +146,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
+
     }
     @Override
     public void onRequestPermissionsResult(int permsRequestCode,
@@ -329,7 +309,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
 
-                        //Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+
                         checkRunTimePermission();
                         return;
                     }
@@ -348,96 +328,126 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //이메일 코드
     //이메일의 내용 가져오기
     private void sendEmail() {
-        //Getting content for email
-        String email = editTextEmail.getText().toString().trim();
-        //String subject = editTextSubject.getText().toString().trim();
-        // String message = editTextMessage.getText().toString().trim();
-// SendMail 객체 만들기
-        //Creating SendMail object
-        SendMail sm = new SendMail(this, email,null,null);
+
+        String stEmail = etEmail.getText().toString().trim();
+        //SendMail 객체 만들기
+        SendMail sm = new SendMail(this, stEmail,null,null);
 
         //Executing sendmail to send email
         sm.execute();
 
     }
-    @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.buttonSend){
+        if(v.getId()== R.id.buttonSend){
             sendEmail();
             //이메일 보내기 버튼 눌렀을때 sendEmail()함수 실행
         }
         //번호 인증 버튼을 눌렀을 때 동작
-        else if(v.getId()==R.id.buttonSend2){
+        else if(v.getId()== R.id.buttonSend2){
             if(editEmailCode.getText().toString().equals(SendMail.emailCode)){
-//임의로 보낸 랜덤 인증번호와 내가 입력한 인증 번호가 일치하면 성공띄움 이후 register과 연결하여 회원가입 성공
+                //인증하기 버튼 눌렀을 때 일치하면 성공
                 Toast.makeText(context,"success",Toast.LENGTH_LONG).show();
-                Button btnRegister = (Button)findViewById(R.id.btnRegister);
-                btnRegister.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
 
-                        stEmail = etEmail.getText().toString();
-                        stPassword = etPassword.getText().toString();
-                        //이메일이 비었을 때나 패스워드가 비었을 때 회원가입이 되지 않음
-                        if(stEmail.isEmpty() || stEmail.equals("")){
-                            Toast.makeText(RegisterActivity.this, "Please insert Email", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if(stPassword.isEmpty() || stPassword.equals("")){
-                            Toast.makeText(RegisterActivity.this, "Please insert Password", Toast.LENGTH_LONG).show();
-                            return;
-                        }
 
-                        pb.setVisibility(View.VISIBLE);
-
-                        mAuth.createUserWithEmailAndPassword(stEmail, stPassword)
-                                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                        pb.setVisibility(View.GONE);
-
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Log.d(TAG, "createUserWithEmail:success");
-                                            Toast.makeText(RegisterActivity.this, "Authentication successed.", Toast.LENGTH_SHORT).show();
-
-                                            FirebaseUser user = mAuth.getCurrentUser();
-//                                    updateUI(user);
-                                            DatabaseReference myRef = database.getReference("users").child(result).child(user.getUid());
-
-                                            Hashtable<String, String> members = new Hashtable<String, String>();
-                                            members.put("email", user.getEmail());
-                                            members.put("key", user.getUid());
-                                            members.put("photo", "");
-                                            members.put("alarm","no");
-
-
-//                                    members.put("photo", user.getPhotoUrl());
-//                                    myRef.child(user.getUid()).setValue(members);
-                                            myRef.setValue(members);
-
-                                            Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
-//                                    updateUI(null);
-                                        }
-
-                                        // ...
-                                    }
-                                });
-
-                    }
-                });
             }
             else{
-                //일치하지 않으면 실패 띄우고 회원가입 또한 진행되지 않음
+                //일치하지 않으면 실패 띄움
                 Toast.makeText(context,"fail",Toast.LENGTH_LONG).show();
+
             }
         }
+        //회원가입 버튼 눌렀을 떄
+        final TextView textview_address = (TextView)findViewById(R.id.gpstext);
+        Button btnRegister = (Button)findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                stEmail = etEmail.getText().toString();
+                stPassword = etPassword.getText().toString();
+                //stEmail 비어있거든 ""일때
+                if(stEmail.isEmpty() || stEmail.equals("")){
+                    Toast.makeText(RegisterActivity.this, "이메일을 입력해주세요", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                //stPasswort 비어있거든 ""일때
+                if(stPassword.isEmpty() || stPassword.equals("")){
+                    Toast.makeText(RegisterActivity.this, "비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                //gps버튼을 누르지 않았을 때 메시지를 띄움
+                if(textview_address.equals("")){
+                    Toast.makeText(RegisterActivity.this, "지역인증을 해주세요.", Toast.LENGTH_LONG).show();
+
+                }
+                //인증코드를 작성하지 않았을 때 메시지를 띄움
+                if(editEmailCode.equals("")){
+                    Toast.makeText(RegisterActivity.this, "인증번호를 입력해주세요.", Toast.LENGTH_LONG).show();
+
+                }
+                //인증코드가 메일에서 보내온 코드와 일치 했을 때 회원가입 성공
+                if(editEmailCode.getText().toString().equals(SendMail.emailCode)){
+
+                    //신규 사용자의 이메일 주소와 비밀번호를 createUserWithEmailAndPassword에 전달하여 신규 계정을 생성한다.
+                    mAuth.createUserWithEmailAndPassword(stEmail, stPassword)
+                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    pb.setVisibility(View.GONE);
+
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        Toast.makeText(RegisterActivity.this, "Authentication successed.", Toast.LENGTH_SHORT).show();
+
+                                        FirebaseUser user = mAuth.getCurrentUser();
+//                                    updateUI(user);
+                                        DatabaseReference myRef = database.getReference("users").child(result).child(user.getUid());
+
+                                        //Hashtable 객체 생성성
+                                       Hashtable<String, String> members = new Hashtable<String, String>();
+                                        members.put("email", user.getEmail()); // put(Object key, Object value)메소드, 데이터 삽입
+                                        members.put("key", user.getUid()); // put(Object key, Object value)메소드, 데이터 삽입
+                                        members.put("photo", ""); // put(Object key, Object value)메소드, 데이터 삽입
+                                        members.put("alarm","no"); // put(Object key, Object value)메소드, 데이터 삽입
+                                        members.put("rating",""); // put(Object key, Object value)메소드, 데이터 삽입
+                                        myRef.setValue(members); //setValue()를 사용하여 지정된 위치에서 데이터를 덮어씀
+
+                                        Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(RegisterActivity.this, "회원가입 실패, 다시 확인바랍니다.",
+                                                Toast.LENGTH_SHORT).show();
+//
+                                    }
+
+                                    // ...
+                                }
+                            });
+                }
+                else{
+                    Toast.makeText(context,"fail",Toast.LENGTH_LONG).show();
+                }
+
+                pb.setVisibility(View.VISIBLE);
+
+
+
+            }
+        });
+    }
+
+    //뒤로가기 두 번 눌렀을 때 앱 종료
+    @Override
+    public void onBackPressed() {
+        //뒤로가기 버튼 두 번 누르는 속도가 1500보다 빠를 때 앱 종료
+        if(System.currentTimeMillis() - lastPressed < 1500){
+            ActivityCompat.finishAffinity(this);
+        }
+        Toast.makeText(RegisterActivity.this, "한 번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        lastPressed = System.currentTimeMillis();
     }
 }

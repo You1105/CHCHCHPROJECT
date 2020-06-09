@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+
     <TextView
         android:id="@+id/tvTitle"
 
@@ -18,7 +19,8 @@
 
         android:layout_marginTop="100dp"
 
-        android:text="@string/login"
+        android:text="LOGIN"
+
         android:textColor="#2196F3"
         android:textSize="30sp"
         />
@@ -35,7 +37,7 @@
 
         android:layout_marginTop="50dp"
 
-        android:hint="@string/hintId"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         />
 
@@ -51,7 +53,7 @@
 
         android:layout_marginTop="25dp"
 
-        android:hint="@string/hintPassword"
+        android:hint="Password"
         android:inputType="textPassword"
         />
 
@@ -68,10 +70,10 @@
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
 
-        android:text="@string/btnLogin"
+        android:text="LOGIN"
         android:textColor="#ffffff"
 
-        android:background="#3F51B5"
+        android:background="@drawable/button_background"
         />
 
     <Button
@@ -87,10 +89,10 @@
         android:layout_marginEnd="100dp"
         android:layout_marginRight="100dp"
 
-        android:text="@string/btnRegister"
+        android:text="JOIN US"
         android:textColor="#ffffff"
 
-        android:background="#3F51B5"
+        android:background="@drawable/button_background"
         />
 
     <ProgressBar

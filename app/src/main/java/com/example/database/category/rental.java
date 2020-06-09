@@ -1,4 +1,4 @@
-package com.example.database.ui.donation;
+package com.example.database.category;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,9 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class donation extends Fragment {
-
-    private DonationViewModel mViewModel;
+public class rental extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
@@ -43,23 +40,24 @@ public class donation extends Fragment {
     String stUid;
     String key;
     String gps;
-    public static donation newInstance() {
-        return new donation();
+
+    public static rental newInstance() {
+        return new rental();
     }
 
-    //카테고리에서 기부를 선택했을 시 donation_fragment 보여줌
+    //카테고리에서 대여를 선택했을 시 rental_fragment 보여줌
     //Layout을 inflate 하는 곳, View 객체를얻어서 초기화
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.donation_fragment, container, false);
+        View root= inflater.inflate(R.layout.rental_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
 
         //SharedPreferences로 저장된 데이터 불러오기
         //key(uid) 값과 gps 불러오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
-        gps=sharedPref.getString("gps", "");
+        gps= sharedPref.getString("gps", "");
         Log.d("ddd",stUid);
 
 
@@ -98,7 +96,7 @@ public class donation extends Fragment {
 
                                 ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
 
-                                if (imageUploadInfo.getcategory().equals("기부")) {
+                                if (imageUploadInfo.getcategory().equals("대여")) {
                                     list.add(imageUploadInfo);
                                     adapter.notifyItemInserted(list.size() - 1);}
 
@@ -124,14 +122,4 @@ public class donation extends Fragment {
 
         return root;
     }
-
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DonationViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

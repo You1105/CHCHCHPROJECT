@@ -11,8 +11,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+
 import androidx.core.content.ContextCompat;
-import android.util.Log;
 
 
 //현재 위치를 가져와 주소로 변화하는 처리를 합니다

@@ -8,38 +8,38 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.database.ui.home.HomeFragment"
+        android:name="com.example.database.category.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/nav_toy"
-        android:name="com.example.database.ui.toy.toy"
+        android:name="com.example.database.category.toy"
         android:label="toy"
         tools:layout="@layout/toy_fragment" />
     <fragment
         android:id="@+id/nav_machine"
-        android:name="com.example.database.ui.machine.machine"
+        android:name="com.example.database.category.machine"
         android:label="machine"
         tools:layout="@layout/machine_fragment" />
     <fragment
         android:id="@+id/nav_stationery"
-        android:name="com.example.database.ui.stationery.stationery"
+        android:name="com.example.database.category.stationery"
         android:label="stationery"
         tools:layout="@layout/stationery_fragment" />
     <fragment
         android:id="@+id/nav_rental"
-        android:name="com.example.database.ui.rental.rental"
+        android:name="com.example.database.category.rental"
         android:label="rental"
         tools:layout="@layout/rental_fragment" />
     <fragment
         android:id="@+id/nav_clothes"
-        android:name="com.example.database.ui.clothes.clothes"
+        android:name="com.example.database.category.clothes"
         android:label="clothes"
         tools:layout="@layout/clothes_fragment" />
     <fragment
         android:id="@+id/nav_donation"
-        android:name="com.example.database.ui.donation.donation"
+        android:name="com.example.database.category.donation"
         android:label="donation"
         tools:layout="@layout/donation_fragment" />
 

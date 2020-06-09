@@ -8,10 +8,10 @@ public class User {
     public String photo;
 
     public User() {
-        // Default constructor required for calls to DataSnapshot.getValue(Comment.class)
+
     }
 
-    //이메일, 키, 사진을 가져오는 Getter와 Setter 설정
+    //email, key, photo 변수를 변경, 호출하기 위한 getter와 setter 설정
 
     public String getEmail() {
         return email;

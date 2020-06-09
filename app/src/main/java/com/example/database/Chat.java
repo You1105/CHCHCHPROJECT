@@ -3,13 +3,15 @@ package com.example.database;
 
 public class Chat {
 
+    //변수 선언
     public String email;
     public String text;
     public String photo;
 
     public Chat() {
-        // Default constructor required for calls to DataSnapshot.getValue(Comment.class)
+
     }
+    //email, text, photo 변수를 변경, 호출하기 위한 getter와 setter 설정
 
     public Chat(String text) {
         this.text = text;

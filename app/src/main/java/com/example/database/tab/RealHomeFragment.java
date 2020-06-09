@@ -1,23 +1,17 @@
 package com.example.database.tab;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,31 +32,27 @@ import java.util.List;
 
 
 public class RealHomeFragment extends Fragment {
-    // Creating RecyclerView.Adapter.
+
 
     Parcelable recyclerViewState;
-    // Creating RecyclerView.
+
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
-    // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
     DatabaseReference databaseReference;
-    // Creating Progress dialog
-    ProgressDialog progressDialog;
     String stUid;
     String key;
     String gps;
-    private int someVarA;
-    private String someVarB;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        //final TextView textView = root.findViewById(R.id.text_home);
-        final TextView textView = root.findViewById(R.id.text_home);
-        // Creating RecyclerView.
+
         recyclerView=root.findViewById(R.id.recyclerView);
+        //LoginAticity의 SharedPreferences를 통해 저장된 값을 불러오기 위해 같은 네임파일을 찾는다.
+        //프로필에서 필요한 정보: key, gps
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
         gps=sharedPref.getString("gps", "");
@@ -95,14 +85,11 @@ public class RealHomeFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot datasnapshot : dataSnapshot.getChildren()){
                                 ImageUploadInfo imageUploadInfo = datasnapshot.getValue(ImageUploadInfo.class);
-
+                                //list에 추가하기
                                 list.add(imageUploadInfo);
-
                                 adapter.notifyItemInserted(list.size() - 1);
 
-
                             }
-
                         }
 
                         @Override
@@ -122,7 +109,7 @@ public class RealHomeFragment extends Fragment {
         });
 
 
-     
+        // actionBar에 Home으로 지정하기
         ActionBar actionBar=((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("Home");
         return root;

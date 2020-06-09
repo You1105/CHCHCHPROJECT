@@ -50,12 +50,11 @@ public class UsersFragment extends Fragment {
 
         recyclerView = (RecyclerView)root.findViewById(R.id.rvUser);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+
         //레이아웃 사이즈 고정
         recyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
+
         //레이아웃매니저: 리사이클러뷰가 아이템을 화면에 표시할 때,
         //아이템 뷰들이 리사이클러뷰 내부에서 배치되는 형태를 관리
         layoutManager = new LinearLayoutManager(getActivity());
@@ -63,10 +62,10 @@ public class UsersFragment extends Fragment {
 
         userArrayList = new ArrayList<>();
 
-        // specify an adapter (see also next example)
+
         mUserAdapter= new UserAdapter(userArrayList, getActivity());
         recyclerView.setAdapter(mUserAdapter);
-
+        //SharedPreferences를 사용하여 key값과 gps값을 가져오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared", Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
         gps= sharedPref.getString("gps", "");
@@ -84,16 +83,12 @@ public class UsersFragment extends Fragment {
                 //이벤트 리스너에 전달되는 DataSnapshot에는 하위 항목의 업데이트된 데이터가 포함됨
 
                 String value = dataSnapshot.getValue().toString();
-                Log.d(TAG, "Value is: " + value);
 
                 for(DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
                     String value2 = dataSnapshot2.getValue().toString();
-                    Log.d(TAG, "Value2 is: " + value2);
 
                     User user = dataSnapshot2.getValue(User.class);
 
-                    // [START_EXCLUDE]
-                    // Update RecyclerView
 
                     userArrayList.add(user); //추가
                     //UserAdapter에서 RecyclerView에 반영하도록 함
@@ -103,12 +98,12 @@ public class UsersFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
 
-        //
+       // actionBar를 chatlist로 지정하기
         ActionBar actionBar=((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("ChatList");
 

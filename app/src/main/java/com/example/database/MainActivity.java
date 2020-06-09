@@ -4,12 +4,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,11 +25,12 @@ import com.example.database.tab.SaveFragment;
 import com.example.database.tab.UsersFragment;
 import com.example.database.tab.WritingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+
+    long lastPressed;
+
 
     int Image_Request_Code = 7;
     Button ChooseButton, UploadButton;
@@ -57,20 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,R.id.nav_toy,R.id.nav_clothes,R.id.nav_donation,R.id.nav_machine,R.id.nav_rental,R.id.nav_stationery)
+                R.id.nav_home, R.id.nav_toy, R.id.nav_clothes, R.id.nav_donation, R.id.nav_machine, R.id.nav_rental, R.id.nav_stationery)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -116,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -127,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    //뒤로가기 두 번 눌렀을 때 앱 종료
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() - lastPressed < 1500){
+            ActivityCompat.finishAffinity(this);
+        }
+        Toast.makeText(MainActivity.this, "한 번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        lastPressed = System.currentTimeMillis();
     }
 
 }

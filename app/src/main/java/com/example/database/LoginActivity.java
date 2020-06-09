@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
+    long lastPressed;
 
     private static final String TAG = "LoginActivity";
 
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         Button btnRegister = (Button)findViewById(R.id.btnRegister);
+        //btnRegister 버튼 누르면 RegisterActivity화면으로 가기
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,26 +58,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //로그인
         Button btnLogin = (Button)findViewById(R.id.btnLogin);
+        //로그인 버튼을 눌렀을 때
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 stEmail = etEmail.getText().toString();
                 stPassword = etPassword.getText().toString();
-
+                //stEmail 비어있거든 ""일때
                 if(stEmail.isEmpty() || stEmail.equals("")){
-                    Toast.makeText(LoginActivity.this, "Please insert Email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "이메일을 입력하세요.", Toast.LENGTH_LONG).show();
                     return;
                 }
+                //stPasswort 비어있거든 ""일때
                 if(stPassword.isEmpty() || stPassword.equals("")){
-                    Toast.makeText(LoginActivity.this, "Please insert Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 pb.setVisibility(View.VISIBLE);
 
+                //사용자가 앱에 로그인하면 사용자의 이메일 주소와 비밀번호를 signInWithEmailAndPassword에 전달한다.
                 mAuth.signInWithEmailAndPassword(stEmail, stPassword)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -83,39 +87,38 @@ public class LoginActivity extends AppCompatActivity {
                                 pb.setVisibility(View.GONE);
 
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
+
                                     Toast.makeText(LoginActivity.this, "Authentication successed.", Toast.LENGTH_SHORT).show();
 
                                     FirebaseUser user = mAuth.getCurrentUser();
-//                                    updateUI(user);
 
                                     String stUserName = user.getDisplayName();
                                     String stUserEmail = user.getEmail();
                                     String stUid = user.getUid();
-//                                    Uri photoUrl = user.getPhotoUrl();
+
                                     Log.d(TAG, "stUserName: " + stUserName + ", stUserEmail: " + stUserEmail + ", stUid: " + stUid);
 
+                                    //SharedPreferences는 키-값 쌍을 포함하는 파일을 가리키며 키-값을 쌍을 읽고 쓸 수 있도록 한다.
                                     SharedPreferences sharedPref = getSharedPreferences("shared" , Context.MODE_PRIVATE);
+                                    //공유 환경설정 파일을 쓰기 위해 SharedPreferences에서 edit() 호출
                                     SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putString("email", stUserEmail);
-                                    editor.putString("key", stUid);
-//                                    editor.putString("photo", photoUrl);
-                                    editor.commit();
+                                    editor.putString("email", stUserEmail); //putString()으로 쓰려고 하는 키 및 값을 전달
+                                    editor.putString("key", stUid); //putString()으로 쓰려고 하는 키 및 값을 전달
+                                    editor.commit(); //commit()을 호출하여 변경사항을 저장한다.
 
-                                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
 
+                                    //MainActivity로 email값을 전달
                                     Intent in = new Intent(LoginActivity.this, MainActivity.class);
                                     in.putExtra("email", stEmail);
                                     startActivity(in);
                                 } else {
-                                    // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                                    updateUI(null);
+                                    Toast.makeText(LoginActivity.this, "로그인 실패, 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+
                                 }
 
-                                // ...
+
                             }
                         });
             }
@@ -123,12 +126,22 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //활동을 초기화할 때 사용자가 현재 로그인되어 있는지 확인
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
+    }
+
+    //뒤로가기 두 번 눌렀을 때 앱 종료
+    @Override
+    public void onBackPressed() {
+        //뒤로가기 버튼 두 번 누르는 속도가 1500보다 빠를 때 앱 종료
+        if(System.currentTimeMillis() - lastPressed < 1500){
+            ActivityCompat.finishAffinity(this);
+        }
+        Toast.makeText(LoginActivity.this, "한 번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        lastPressed = System.currentTimeMillis();
     }
 
 }
