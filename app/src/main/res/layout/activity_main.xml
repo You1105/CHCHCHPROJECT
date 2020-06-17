@@ -27,16 +27,6 @@
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconTint="#000000"
-        app:itemTextColor="#000000"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/bottom_menu"
-        tools:layout_editor_absoluteX="16dp" />
 
 
 </RelativeLayout>

@@ -29,7 +29,6 @@
         -->
 
 
-
         <activity android:name=".Detailed_Content" />
         <activity android:name=".tab.RealHomeFragment" />
         <activity android:name=".tab.SaveFragment" />
@@ -41,17 +40,25 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".StarActivity"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FirstpageActivity">
             <intent-filter>
+                <action android:name="android.support.multidex.MultiDexApplication"/>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+
+            android:value="ca-app-pub-3723856646359225~1228730382"/>
     </application>
 
 </manifest>

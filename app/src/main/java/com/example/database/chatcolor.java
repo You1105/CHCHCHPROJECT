@@ -67,7 +67,7 @@ public class chatcolor extends Fragment {
             @Override
             public void onClick(View v) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("users").child(gps).child(stUid).child("color").setValue("pink");
-                Toast.makeText(getContext().getApplicationContext(),"green컬러 설정되었습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext().getApplicationContext(),"pink컬러 설정되었습니다.", Toast.LENGTH_LONG).show();
             }
         });
         //보라색을 클릭했을 때

@@ -31,7 +31,11 @@
     <string name="hintPassword">Password</string>
     <string name="btnLogin">GO LOGIN</string>
     <string name="btnRegister">JOIN US</string>
+    <string name="admob_app_id">ca-app-pub-3723856646359225~1228730382</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-3723856646359225/5941807497</string>
+
+    <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="clothes">옷</string>
     <string name="donation">기부</string>
 
