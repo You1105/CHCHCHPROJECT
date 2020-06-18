@@ -30,6 +30,7 @@ import java.util.List;
 
 public class donation extends Fragment {
 
+    // Creating RecyclerView.
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ImageUploadInfo> list;
@@ -41,26 +42,27 @@ public class donation extends Fragment {
     String stUid;
     String key;
     String gps;
-    public static donation newInstance() {
-        return new donation();
+
+    public static clothes newInstance() {
+        return new clothes();
     }
 
-    //카테고리에서 기부를 선택했을 시 donation_fragment 보여줌
+    //카테고리에서 의류를 선택했을 시 clothes_fragment를 보여줌
     //Layout을 inflate 하는 곳, View 객체를얻어서 초기화
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.donation_fragment, container, false);
+        View root =  inflater.inflate(R.layout.donation_fragment, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
+
 
         //SharedPreferences로 저장된 데이터 불러오기
         //key(uid) 값과 gps 불러오기
         SharedPreferences sharedPref = getActivity().getSharedPreferences("shared" , Context.MODE_PRIVATE);
         stUid = sharedPref.getString("key", "");
         gps=sharedPref.getString("gps", "");
+
         Log.d("ddd",stUid);
-
-
 
         // Setting RecyclerView size true.
         recyclerView.setHasFixedSize(true);
@@ -75,9 +77,9 @@ public class donation extends Fragment {
 
         databaseReference= FirebaseDatabase.getInstance().getReference("users").child(gps);
 
-        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         final Query query=databaseReference.orderByChild("imageupload");
 
+        //Query를 사용하여 이름이 imageupload경로의 값에 따라 결과를 정렬
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,9 +87,6 @@ public class donation extends Fragment {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
                     key=postSnapshot.getKey();
-
-
-
 
                     databaseReference.child(key).child("imageupload").addValueEventListener(new ValueEventListener() {
                         @Override
