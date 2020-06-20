@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:adUnitId="@string/banner_ad_unit_id_for_test"
         ads:layout_constraintTop_toTopOf="parent"
         ads:layout_constraintStart_toStartOf="parent" >
     </com.google.android.gms.ads.AdView>
