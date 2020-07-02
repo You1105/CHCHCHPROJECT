@@ -92,7 +92,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etPassword"
             app:layout_constraintVertical_chainStyle="packed"
-            app:scale_textsize="70"
+            app:scale_textsize="45"
             app:scale_height="200"
             app:scale_left="150"
             app:scale_top="700"
