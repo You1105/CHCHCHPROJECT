@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,84 +11,106 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.ssomai.android.scalablelayout.ScalableLayout
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
 
-            android:layout_width="397dp"
-            android:layout_height="499dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="102dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="match_parent"
 
-            <RadioButton
-                android:id="@+id/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/white"
-                android:text="white" />
+            app:scale_base_height="1920"
 
-            <RadioButton
-                android:id="@+id/green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/green"
-                android:text="green" />
 
-            <RadioButton
-                android:id="@+id/blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/BLUE"
-                android:text="blue" />
+            app:scale_base_width="1080"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="150dp">
 
-            <RadioButton
-                android:id="@+id/pink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/pink"
-                android:text="pink" />
+            <RadioGroup
+                android:id="@+id/radioGroup"
 
-            <RadioButton
-                android:id="@+id/purple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/purple"
-                android:text="purple" />
+                android:layout_width="397dp"
+                android:layout_height="423dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="102dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintVertical_bias="0.0"
 
-            <RadioButton
-                android:id="@+id/yellow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/yellow"
-                android:text="yellow" />
-        </RadioGroup>
+                app:scale_height="1500"
+                app:scale_left="400"
+                app:scale_textsize="70"
+                app:scale_top="250"
+                app:scale_width="500"
+                tools:ignore="MissingPrefix">
+
+                <RadioButton
+                    android:id="@+id/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    android:text="white" />
+
+                <RadioButton
+                    android:id="@+id/green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/green"
+                    android:text="green" />
+
+                <RadioButton
+                    android:id="@+id/blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/BLUE"
+                    android:text="blue" />
+
+                <RadioButton
+                    android:id="@+id/pink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/pink"
+                    android:text="pink" />
+
+                <RadioButton
+                    android:id="@+id/purple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/purple"
+                    android:text="purple" />
+
+                <RadioButton
+                    android:id="@+id/yellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/yellow"
+                    android:text="yellow" />
+            </RadioGroup>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
 
         <TextView
             android:id="@+id/textView3"
@@ -97,7 +120,14 @@
             android:textSize="30sp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="20dp"
+
+            app:scale_textsize="80"
+            app:scale_height="100"
+            app:scale_left="150"
+            app:scale_top="50"
+            app:scale_width="800"
+            tools:ignore="MissingPrefix" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

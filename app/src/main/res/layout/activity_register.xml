@@ -7,162 +7,232 @@
     tools:context=".RegisterActivity">
 
 
+    <com.ssomai.android.scalablelayout.ScalableLayout
 
-    <TextView
-        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/Register"
-        android:textColor="#2196F3"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_height="match_parent"
 
-    <EditText
-        android:id="@+id/etEmail"
-
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="50dp"
-        android:hint="@string/hintId"
-
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-
-        />
-
-    <EditText
-        android:id="@+id/etPassword"
-
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="25dp"
-        android:hint="@string/hintPassword"
-
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail"
-
-        />
-    <TextView
-        android:id="@+id/gpstext"
-        android:layout_width="180dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginLeft="82dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:hint="지역 인증하기"
-        app:layout_constraintBottom_toTopOf="@id/editEmailCode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintVertical_chainStyle="packed"
-
-        />
-
-    <Button
-        android:id="@+id/gpsbutton"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="82dp"
-        android:layout_marginRight="82dp"
-        android:background="@drawable/button_background"
-        android:text="GPS"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-
-        />
-
-    <EditText
-        android:id="@+id/editEmailCode"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="이메일 인증하기"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gpstext"
-
-        />
-
-    <Button
-        android:id="@+id/buttonSend"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_background"
-        android:text="이메일 보내기"
-        android:textColor="#ffffff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmailCode"
-
-        />
-    <Button
-        android:id="@+id/buttonSend2"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
-        android:background="@drawable/button_background"
-        android:text="인증하기"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editEmailCode"
-        />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/button_background"
-        android:text="@string/btnRegister"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editEmailCode"
-        />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_background"
-        android:text="@string/btnLogin"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnRegister"
-        />
-
-    <ProgressBar
-        android:id="@+id/pb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
+        app:scale_base_height="1920"
 
 
+        app:scale_base_width="1080"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="150dp">
+        <TextView
+            android:id="@+id/tvTitle"
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/Register"
+            android:textColor="#2196F3"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:scale_textsize="100"
+            app:scale_height="200"
+            app:scale_left="350"
+            app:scale_top="200"
+            app:scale_width="700"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/etEmail"
+
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="50dp"
+            android:hint="@string/hintId"
+
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="200"
+            app:scale_top="350"
+            app:scale_width="700"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/etPassword"
+
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="25dp"
+            android:hint="@string/hintPassword"
+
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEmail"
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="200"
+            app:scale_top="500"
+            app:scale_width="700"
+            tools:ignore="MissingPrefix" />
+        <TextView
+            android:id="@+id/gpstext"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="82dp"
+            android:layout_marginLeft="82dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:hint="지역 인증하기"
+            app:layout_constraintBottom_toTopOf="@id/editEmailCode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPassword"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="150"
+            app:scale_top="700"
+            app:scale_width="400"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/gpsbutton"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="82dp"
+            android:layout_marginRight="82dp"
+            android:background="@drawable/button_background"
+            android:text="GPS"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPassword"
+            app:scale_textsize="70"
+            app:scale_height="150"
+            app:scale_left="600"
+            app:scale_top="750"
+            app:scale_width="300"
+            tools:ignore="MissingPrefix" />
+
+        <EditText
+            android:id="@+id/editEmailCode"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="이메일 인증하기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gpstext"
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="150"
+            app:scale_top="900"
+            app:scale_width="700"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background"
+            android:text="이메일 보내기"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editEmailCode"
+            app:scale_textsize="50"
+            app:scale_height="200"
+            app:scale_left="150"
+            app:scale_top="1100"
+            app:scale_width="300"
+            tools:ignore="MissingPrefix" />
+        <Button
+            android:id="@+id/buttonSend2"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"
+            android:background="@drawable/button_background"
+            android:text="인증하기"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editEmailCode"
+            app:scale_textsize="50"
+            app:scale_height="200"
+            app:scale_left="550"
+            app:scale_top="1100"
+            app:scale_width="300"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/button_background"
+            android:text="@string/btnRegister"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editEmailCode"
+
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="250"
+            app:scale_top="1400"
+            app:scale_width="500"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:text="@string/btnLogin"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnRegister"
+
+            app:scale_textsize="70"
+            app:scale_height="200"
+            app:scale_left="250"
+            app:scale_top="1650"
+            app:scale_width="500"
+            tools:ignore="MissingPrefix" />
+
+        <ProgressBar
+            android:id="@+id/pb"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+
+            android:visibility="gone"
+            app:scale_height="150"
+
+
+            app:scale_textsize="60"
+            app:scale_top="700"
+
+            app:scale_width="1100"
+            tools:ignore="MissingPrefix"
+            />
+
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
